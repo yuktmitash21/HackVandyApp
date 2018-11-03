@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".ViewParties">
+
+    <Button
+        android:id="@+id/mapview"
+        android:layout_width="169dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="138dp"
+        android:text="Map View"
+        android:background="#99cc00"
+        app:layout_constraintBottom_toTopOf="@+id/ListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ListView"
+        android:layout_width="169dp"
+        android:layout_height="82dp"
+        android:text="List View"
+        android:background="#99cc00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605" />
+
+    <Button
+        android:id="@+id/HomeFromView"
+        android:layout_width="169dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="56dp"
+        android:layout_marginTop="31dp"
+        android:text="Home"
+        android:background="#99cc00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ListView" />
+</android.support.constraint.ConstraintLayout>

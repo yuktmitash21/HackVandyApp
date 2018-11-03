@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "206129823881",
+    "firebase_url": "https://whatsthemove-42660.firebaseio.com",
+    "project_id": "whatsthemove-42660",
+    "storage_bucket": "whatsthemove-42660.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206129823881:android:31e6e98124ced663",
+        "android_client_info": {
+          "package_name": "com.example.yuktmitash.whatsthemove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206129823881-1arrd1j7uit3n7lerchqh3id7tj6sj9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yuktmitash.whatsthemove",
+            "certificate_hash": "87da2d89b79a5466affa2935ab1f7ee674ede4e5"
+          }
+        },
+        {
+          "client_id": "206129823881-s6u0669e1dh2123vnkkhkbidkl3cbrtk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI3Hn0DqwcbOUmSo0HNawpIqpjzNKg8Z8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206129823881-s6u0669e1dh2123vnkkhkbidkl3cbrtk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

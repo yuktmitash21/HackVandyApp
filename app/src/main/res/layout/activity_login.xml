@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".login">
+
+    <EditText
+        android:id="@+id/logemail"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="4dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="66dp"
+        android:ems="10"
+        android:hint="e-mail"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/passwordlogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/passwordlogin"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="316dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_marginStart="4dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textWebPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logemail" />
+
+    <Button
+        android:id="@+id/loginInlog"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="191dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="187dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="187dp"
+        android:layout_marginTop="48dp"
+        android:text="Login"
+        android:background="#99cc00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordlogin" />
+
+    <TextView
+        android:id="@+id/failedlogin"
+        android:layout_width="346dp"
+        android:layout_height="74dp"
+        android:layout_marginBottom="97dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginInlog" />
+
+    <Button
+        android:id="@+id/makeAnAccount"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="48dp"
+        android:background="#99cc00"
+
+        android:text="Make An Account"
+        app:layout_constraintBottom_toTopOf="@+id/failedlogin"
+        app:layout_constraintEnd_toStartOf="@+id/loginInlog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordlogin" />
+
+</android.support.constraint.ConstraintLayout>

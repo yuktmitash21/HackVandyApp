@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".registration"
+    tools:showIn="@layout/activity_registration">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="462dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="16dp"
+        android:text="                                      Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/nameregistration"
+        android:layout_width="303dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="374dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:hint="username"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/mail"
+        android:layout_width="303dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="275dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="e-mail"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameregistration" />
+
+    <EditText
+        android:id="@+id/passwordregistration"
+        android:layout_width="303dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="138dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginStart="35dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DOB" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="39dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginLeft="208dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginStart="208dp"
+        android:layout_marginTop="14dp"
+        android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordregistration"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <TextView
+        android:id="@+id/failed"
+        android:layout_width="187dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="85dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordregistration" />
+
+    <TextView
+        android:id="@+id/DOB"
+        android:layout_width="303dp"
+        android:layout_height="54dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="42dp"
+        android:text="Select Date of Birth"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/passwordregistration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mail" />
+
+</android.support.constraint.ConstraintLayout>

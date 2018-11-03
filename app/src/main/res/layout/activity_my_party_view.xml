@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".myPartyView">
+
+    <TextView
+        android:id="@+id/headerMyParty"
+        android:layout_width="351dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/bodyMyParty"
+        android:layout_width="301dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/addressMyParty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerMyParty"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/addressMyParty"
+        android:layout_width="301dp"
+        android:layout_height="20dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/sponsorMyParty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bodyMyParty"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/sponsorMyParty"
+        android:layout_width="301dp"
+        android:layout_height="19dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/LitnessMyParty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressMyParty"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/LitnessMyParty"
+        android:layout_width="301dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="412dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sponsorMyParty"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/averageAgeMyParty"
+        android:layout_width="301dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/promotionsMyParty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LitnessMyParty"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/promotionsMyParty"
+        android:layout_width="301dp"
+        android:layout_height="20dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/averageAgeMyParty"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/promotionalMessage"
+        android:layout_width="301dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="234dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/mapViewFromMy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/promotionsMyParty"
+        android:textColor="#ffffff"/>
+
+    <Button
+        android:id="@+id/mapViewFromMy"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="124dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="14dp"
+        android:text="MapView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/HomeFromMy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/promotionalMessage"
+        app:layout_constraintVertical_bias="1.0"
+        android:background="#99cc00"/>
+
+    <Button
+        android:id="@+id/HomeFromMy"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="21dp"
+        android:text="Home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mapViewFromMy"
+        app:layout_constraintTop_toBottomOf="@+id/promotionalMessage"
+        app:layout_constraintVertical_bias="1.0"
+        android:background="#99cc00"/>
+
+    <ImageView
+        android:id="@+id/myPartyImage"
+        android:layout_width="400dp"
+        android:layout_height="240dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/HomeFromMy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/promotionalMessage"
+        app:srcCompat="@android:drawable/screen_background_light_transparent" />
+
+    <Button
+        android:id="@+id/numPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:text="Add Face Scan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/HomeFromMy"
+        app:layout_constraintStart_toEndOf="@+id/mapViewFromMy"
+        app:layout_constraintTop_toBottomOf="@+id/myPartyImage"
+        android:background="#99cc00"/>
+</android.support.constraint.ConstraintLayout>

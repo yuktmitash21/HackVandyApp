@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PromoteParty">
+
+    <TextView
+        android:id="@+id/partyNamePromote"
+        android:layout_width="381dp"
+        android:layout_height="83dp"
+        android:layout_marginBottom="45dp"
+        android:text="TextView"
+        android:textSize="20dp"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/spinner69"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner69"
+        android:layout_width="381dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partyNamePromote" />
+
+    <Button
+        android:id="@+id/promotepromote"
+        android:layout_width="157dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="220dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="370dp"
+        android:text="Promote"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cancelpromote"
+        app:layout_constraintTop_toBottomOf="@+id/spinner69" />
+
+    <Button
+        android:id="@+id/cancelpromote"
+        android:layout_width="157dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="232dp"
+        android:layout_marginTop="370dp"
+        android:text="Home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/promotepromote"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner69" />
+
+    <TextView
+        android:id="@+id/failed52"
+        android:layout_width="379dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="122dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/promotepromote" />
+
+    <ImageView
+        android:id="@+id/myImageView"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintBottom_toTopOf="@+id/failed52"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.174"
+        app:srcCompat="@android:drawable/screen_background_light_transparent" />
+</android.support.constraint.ConstraintLayout>

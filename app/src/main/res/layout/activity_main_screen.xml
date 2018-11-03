@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".MainScreen">
+
+    <Button
+        android:id="@+id/logoutmain"
+        android:layout_width="136dp"
+        android:layout_height="68dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="232dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="12dp"
+        android:text="Logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MyParties"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/intro"
+        android:layout_width="243dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Promoter"
+        android:layout_width="227dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="10dp"
+        android:text="Promote"
+        app:layout_constraintBottom_toTopOf="@+id/logoutmain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MyParties" />
+
+    <Button
+        android:id="@+id/Finder"
+        android:layout_width="227dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginTop="90dp"
+        android:text="Find A Move"
+        app:layout_constraintBottom_toTopOf="@+id/starter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro" />
+
+    <Button
+        android:id="@+id/starter"
+        android:layout_width="227dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="17dp"
+        android:text="Start A Party"
+        app:layout_constraintBottom_toTopOf="@+id/MyParties"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Finder" />
+
+    <Button
+        android:id="@+id/MyParties"
+        android:layout_width="227dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="17dp"
+        android:text="My Parties"
+        app:layout_constraintBottom_toTopOf="@+id/Promoter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/starter" />
+
+    <Button
+        android:id="@+id/MyProfile"
+        android:layout_width="227dp"
+        android:layout_height="63dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginLeft="79dp"
+        android:layout_marginRight="78dp"
+        android:layout_marginStart="79dp"
+        android:text="My Profile"
+        app:layout_constraintBottom_toTopOf="@+id/Finder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro" />
+
+</android.support.constraint.ConstraintLayout>
