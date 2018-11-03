@@ -44,4 +44,14 @@
         android:gravity="bottom"
         android:textColor="#99cc00"/>
 
+    <Button
+        android:id="@+id/HomeFromChat"
+        android:layout_width="102dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+         android:background="#99cc00"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Home" />
+
 </RelativeLayout>

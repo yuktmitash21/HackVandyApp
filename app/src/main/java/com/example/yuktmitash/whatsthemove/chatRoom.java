@@ -1,5 +1,6 @@
 package com.example.yuktmitash.whatsthemove;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class chatRoom extends AppCompatActivity {
     private TextView textView;
     private EditText editText;
     private TextView myTextView;
+    private Button home;
 
 
     private FirebaseUser firebaseUser;
@@ -52,11 +54,19 @@ public class chatRoom extends AppCompatActivity {
         button = findViewById(R.id.chatRoomButton);
         textView = findViewById(R.id.Messages);
         editText = findViewById(R.id.messageToSend);
+        home = findViewById(R.id.HomeFromChat);
        // myTextView = findViewById(R.id.partyNameChat);
 
         partyName = getIntent().getStringExtra("partyName");
         partyId = getIntent().getStringExtra("partyid");
         reference = FirebaseDatabase.getInstance().getReference();
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainScreen.class));
+            }
+        });
 
 
 
