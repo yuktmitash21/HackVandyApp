@@ -103,6 +103,8 @@ public class chatRoom extends AppCompatActivity {
             }
         });
 
+        //on data change listener rather than single event
+
                 reference.child("messages").child(partyId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

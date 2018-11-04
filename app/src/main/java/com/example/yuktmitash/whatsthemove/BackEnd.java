@@ -6,6 +6,7 @@ public class BackEnd {
     private ArrayList<Party> myParties = new ArrayList<>();
     private User user;
     private String userid;
+    //on data change listener rather than single event
 
 
     public BackEnd(User user, String userid) {

@@ -49,7 +49,7 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-android:1.2.0-rc0'
 
 
-     implementation 'com.google.android.gms:play-services-vision:17.0.2'
+    implementation 'com.google.android.gms:play-services-vision:17.0.2'
 
 }
 

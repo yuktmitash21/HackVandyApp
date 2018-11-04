@@ -55,6 +55,7 @@ public class NumberOfPeople extends AppCompatActivity {
 
 
     private static final int CAMERA_REQUEST_CODE = 1;
+    //on data change listener rather than single event
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private FirebaseAuth firebaseAuth;
-
+//on data change listener rather than single event
 
 
     @Override
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registrationIntent = new Intent(getApplicationContext(), registration.class);
+                Intent registrationIntent = new Intent(getApplicationContext(), CheckCop.class);
 
                 startActivity(registrationIntent);
             }

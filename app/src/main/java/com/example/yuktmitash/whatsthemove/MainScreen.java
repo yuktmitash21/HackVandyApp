@@ -104,6 +104,7 @@ public class MainScreen extends AppCompatActivity {
                         userProfile.putExtra("email", user.getEmail());
                         userProfile.putExtra("id", userid);
                         startActivity(userProfile);
+                        //on data change listener rather than single event
 
                     }
 

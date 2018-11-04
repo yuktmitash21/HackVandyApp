@@ -7,7 +7,7 @@ public enum Litness {
     PrettyDecent("Pretty decent"),
     BestPartyOfTheMonth("Best Party of the month"),
     RAGER("Once in a lifetime experience");
-
+    //on data change listener rather than single event
     private String rating;
 
     Litness(String x) {

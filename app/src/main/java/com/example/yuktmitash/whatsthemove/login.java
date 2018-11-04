@@ -106,6 +106,7 @@ public class login extends AppCompatActivity {
                 }
             });
         }
+    //on data change listener rather than single event
 
 
     }

@@ -48,6 +48,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
     private double longitude;
     private LocationManager locationManager;
     private LocationListener locationListener;
+    //on data change listener rather than single event
 
     private Button mapsHome;
 

@@ -182,7 +182,7 @@ public class PartyView extends AppCompatActivity {
                         } else {
                             database = FirebaseDatabase.getInstance();
                             reference = database.getReference();
-                            reference.child("parties").child(id).child("promotions").addValueEventListener(new ValueEventListener() {
+                            reference.child("parties").child(id).child("promotions").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     long pro = (Long) dataSnapshot.getValue();

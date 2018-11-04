@@ -118,6 +118,7 @@ public class PromoteParty extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                //on data change listener rather than single event
 
             }
         });

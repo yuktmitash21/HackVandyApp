@@ -78,6 +78,7 @@ public class CreateParty extends AppCompatActivity {
 
     private int rating;
     //private String usernumber;
+    //on data change listener rather than single event
     private RequestQueue requestQueue;
 
 

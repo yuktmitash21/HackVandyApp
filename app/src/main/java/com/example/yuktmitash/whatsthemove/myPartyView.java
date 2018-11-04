@@ -36,6 +36,7 @@ public class myPartyView extends AppCompatActivity {
     private ImageView imageView;
     private StorageReference myStorage;
     private String myPartyId;
+    //on data change listener rather than single event
 
 
     private Button mapView;

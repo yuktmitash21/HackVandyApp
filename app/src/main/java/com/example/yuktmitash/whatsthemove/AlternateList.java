@@ -180,6 +180,7 @@ public class AlternateList extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                //on data change listener rather than single event
 
             }
         });

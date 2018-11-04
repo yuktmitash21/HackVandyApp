@@ -75,7 +75,7 @@ public class ListOfMoves extends AppCompatActivity {
         reference = database.getReference();
 
         partyArrayList = new ArrayList<>();
-
+        //on data change listener rather than single event
 
 
 
