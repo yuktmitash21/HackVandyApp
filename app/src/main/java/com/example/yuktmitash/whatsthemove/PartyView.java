@@ -111,7 +111,7 @@ public class PartyView extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference();
-        reference.child("parties").child(id).addValueEventListener(new ValueEventListener() {
+        reference.child("parties").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 party = dataSnapshot.getValue(Party.class);
