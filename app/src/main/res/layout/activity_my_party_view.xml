@@ -118,13 +118,13 @@
         android:layout_marginRight="124dp"
         android:layout_marginStart="42dp"
         android:layout_marginTop="14dp"
-        android:text="MapView"
+        android:background="#99cc00"
+        android:text="Add Video"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/HomeFromMy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/promotionalMessage"
-        app:layout_constraintVertical_bias="1.0"
-        android:background="#99cc00"/>
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/HomeFromMy"

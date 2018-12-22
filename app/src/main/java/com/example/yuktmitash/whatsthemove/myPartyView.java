@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 
 public class myPartyView extends AppCompatActivity {
     private TextView header;
@@ -46,6 +54,8 @@ public class myPartyView extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference;
 
+    private String fireid;
+
     Party userParty;
 
     private String myPartyname;
@@ -56,6 +66,9 @@ public class myPartyView extends AppCompatActivity {
     private long myPartyaverageAge;
     private long myPartypromotions;
 
+
+    private static final int REQUEST_VIDEO_CAPTURE = 101;
+    private Uri fileUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +99,8 @@ public class myPartyView extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference();
+
+        fireid = userid;
 
         reference.child("parties").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -173,25 +188,51 @@ public class myPartyView extends AppCompatActivity {
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Maps.class));
+                Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+                }
             }
         });
 
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent picIntent = new Intent(getApplicationContext(), NumberOfPeople.class);
-                Log.d("This is the party id", myPartyId);
+                Intent picIntent = new Intent(getApplicationContext(), PeopleCounter.class);
+                //Log.d("This is the party id", myPartyId);
                 picIntent.putExtra("id", myPartyId);
                 startActivity(picIntent);
             }
         });
 
 
+    }
 
-
-
-
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_VIDEO_CAPTURE) {
+                Uri selectedImageUri = data.getData();
+                StorageReference path = myStorage.child("Video").child(fireid);
+                if (selectedImageUri != null) {
+                    path.putFile(selectedImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(myPartyView.this, "Video Uploaded!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(myPartyView.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                /*selectedImageUri = handleImageUri(selectedImageUri);
+                selectedPath = getRealPathFromURI(selectedImageUri);
+                tvStatus.setText("Selected Path :: " + selectedPath);
+                Log.i(TAG, " Path :: " + selectedPath);*/
+                } else {
+                    Toast.makeText(myPartyView.this, "Oops! Something went wrong...", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 }

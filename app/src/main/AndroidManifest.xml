@@ -56,6 +56,9 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="face" />
 
         <activity
             android:name=".Maps"
@@ -69,7 +72,9 @@
         <activity android:name=".UserProfile" />
         <activity android:name=".AlternateList" />
         <activity android:name=".NumberOfPeople" />
-        <activity android:name=".CheckCop"></activity>
+        <activity android:name=".CheckCop" />
+        <activity android:name=".PeopleCounter" />
+        <activity android:name=".realTimeFaceDetection"></activity>
     </application>
 
 </manifest>

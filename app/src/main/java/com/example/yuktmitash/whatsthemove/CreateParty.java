@@ -58,6 +58,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,6 +105,7 @@ public class CreateParty extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 1;
     private StorageReference storageReference;
     private ProgressDialog progressDialog;
+    private boolean checkForImage = false;
 
 
 
@@ -217,40 +221,35 @@ public class CreateParty extends AppCompatActivity {
             }
 
         public void storeInfo() {
-        boolean x = true;
+
+        if (name.getText().toString().equals("")) {
+            Toast.makeText(CreateParty.this, "Please enter a name", Toast.LENGTH_SHORT).show();
+        } else if (sponsor.getText().toString().equals("")) {
+            Toast.makeText(CreateParty.this, "Please enter a sponsor", Toast.LENGTH_SHORT).show();
+        } else if (myAddress.equals("")) {
+            Toast.makeText(CreateParty.this, "Please set your location" , Toast.LENGTH_SHORT).show();
+        } else if (!checkForImage) {
+            Toast.makeText(CreateParty.this, "Please upload an image", Toast.LENGTH_SHORT).show();
+        } else {
+
+            //adding party to db by user id
+            usernumber = firebaseUser.getUid();
+            Party party = new Party(0, longitude, lattitude, 0, false,
+                    "Not yet rated!", name.getText().toString(), sponsor.getText().toString(),
+                    myAddress);
+            party.setFireid(usernumber);
+
+            Firebase partay = mRootRef.child(usernumber);
+            partay.setValue(party);
+            Date date = new Date();
+            CustomDate customDate = new CustomDate(date.getMonth(), date.getDay(), date.getYear(),
+                    date.getHours(), date.getMinutes());
+            mRootRef.child("dates").child(usernumber).setValue(customDate);
 
 
-            /*if (spinner.getSelectedItem().toString().equals("Worse than listening to nickelback")) {
-                rating = 2;
-            } else if (spinner.getSelectedItem().toString().equals("Better than Nothing")) {
-                rating = 4;
-            } else if (spinner.getSelectedItem().toString().equals("Pretty decent")) {
-                rating = 6;
-            } else if (spinner.getSelectedItem().toString().equals("Best Party of the month")) {
-                rating = 8;
-            } else if (spinner.getSelectedItem().toString().equals("Rager")) {
-                rating = 10;
-            } else  if (spinner.getSelectedItem().toString().equals("Litness")) {
-                failed.setText("Enter a Litness factor");
-                x = false;
-
-            }*/
-
-
-
-                //adding party to db by user id
-                usernumber = firebaseUser.getUid();
-                Party party = new Party(0, longitude, lattitude, 0, false,
-                        "Not yet rated!", name.getText().toString(), sponsor.getText().toString(),
-                        myAddress);
-                party.setFireid(usernumber);
-
-                Firebase partay = mRootRef.child(usernumber);
-                partay.setValue(party);
-
-
-                Toast.makeText(CreateParty.this, "Party Created!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainScreen.class));
+            Toast.makeText(CreateParty.this, "Party Created!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), MainScreen.class));
+        }
 
         }
 
@@ -354,6 +353,7 @@ public class CreateParty extends AppCompatActivity {
                     Toast.makeText(CreateParty.this, "Image Uploaded!", Toast.LENGTH_LONG).show();
                     addPic.setVisibility(View.INVISIBLE);
                     imageView.setImageBitmap(bitmap);
+                    checkForImage = true;
 
 
                 }
@@ -362,6 +362,7 @@ public class CreateParty extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
                     Toast.makeText(CreateParty.this, "Ooops.. Something went wrong", Toast.LENGTH_LONG).show();
+                    checkForImage = false;
 
                 }
             });

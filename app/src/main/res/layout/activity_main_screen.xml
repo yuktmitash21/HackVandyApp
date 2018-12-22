@@ -81,7 +81,7 @@
         android:layout_width="227dp"
         android:layout_height="63dp"
         android:layout_marginBottom="17dp"
-        android:text="My Parties"
+        android:text="My Party"
         app:layout_constraintBottom_toTopOf="@+id/Promoter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"

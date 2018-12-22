@@ -25,9 +25,7 @@ public class User {
         this.monthBorn = monthBorn;
         this.dayBorn = dayBorn;
 
-        Parties = new ArrayList<>();
-        Parties.add(new Party(19, longitude, lattitude, 5, false,
-                null, "ya", "ya", null));
+
     }
 
     public User() {}

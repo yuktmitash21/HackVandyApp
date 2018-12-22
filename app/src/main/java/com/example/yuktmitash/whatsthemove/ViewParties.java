@@ -32,6 +32,8 @@ public class ViewParties extends AppCompatActivity {
         list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent altList = new Intent(getApplicationContext(), AlternateList.class);
+                altList.putExtra("Promotable", false);
                 startActivity(new Intent(getApplicationContext(), AlternateList.class));
             }
         });

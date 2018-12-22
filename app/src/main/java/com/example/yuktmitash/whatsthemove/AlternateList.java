@@ -81,6 +81,8 @@ public class AlternateList extends AppCompatActivity {
     private CustomAdapter MycustomAdapter;
     private ArrayList<String> IdsOfPictures;
 
+    private static final double MINIMUM_DISTANCE = 0.5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +129,7 @@ public class AlternateList extends AppCompatActivity {
 
                    Arrays.sort(array);
                     Party logger = (Party) array[0];
-                    Log.d("SortedARRAY", logger.getName());
+                    //Log.d("SortedARRAY", logger.getName());
                    // bitmaps = new ArrayList<Bitmap>();
                     messages = new ArrayList<String>();
                     names = new ArrayList<String>();
@@ -139,7 +141,7 @@ public class AlternateList extends AppCompatActivity {
                         final Party p = (Party) pp;
                         names.add(p.getName());
                         Log.d("SIXENAMES", "" + names.size());
-                        if (p.getDistance() <= 10) {
+                        if (p.getDistance() <= MINIMUM_DISTANCE) {
                             messages.add("Promotions: " + p.getPromotions() + " You are in range!");
                         } else {
                             messages.add("Promotions: " + p.getPromotions() + " You are not in range :(");
@@ -251,12 +253,12 @@ public class AlternateList extends AppCompatActivity {
                     float distanceBetween = arr[0];
                     float trueDistance = distanceBetween * (float) 0.000621371;
 
-                    //THIS IS HARD CODING FOR HACKATHON PURPOSES!!!!!!!!!!!!!!!!!
-                    if (trueDistance >= 1000) {
-                        trueDistance = 1;
-                    }
+
                     p.setDistance(trueDistance);
-                   partyArrayList.add(p);
+                    boolean promoteOnly = getIntent().getBooleanExtra("Promotable", false);
+                    if (!promoteOnly || p.getDistance() < MINIMUM_DISTANCE) {
+                        partyArrayList.add(p);
+                    }
                    p.setSortBy("distance");
                 }
                 array = partyArrayList.toArray();
@@ -266,7 +268,7 @@ public class AlternateList extends AppCompatActivity {
                     final Party p = (Party) pp;
                     names.add(p.getName());
                     Log.d("SIXENAMES", "" + names.size());
-                    if (p.getDistance() <= 10) {
+                    if ((double)p.getDistance() <= MINIMUM_DISTANCE) {
                         messages.add("Promotions: " + p.getPromotions() + " You are in range!");
                     } else {
                         messages.add("Promotions: " + p.getPromotions() + " You are not in range :(");

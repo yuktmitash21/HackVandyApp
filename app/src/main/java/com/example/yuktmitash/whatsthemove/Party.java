@@ -2,6 +2,9 @@ package com.example.yuktmitash.whatsthemove;
 
 import android.provider.Telephony;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class Party implements Comparable {
     private long averageAge;
     private long promotions;
@@ -21,6 +24,8 @@ public class Party implements Comparable {
 
     private String sortBy;
     private float people;
+
+
 
 
     public Party(long promotions, double longitude, double lattitude, long rating, boolean isMove, String litness, String name,
@@ -163,4 +168,6 @@ public class Party implements Comparable {
     public void setPeople(float people) {
         this.people = people;
     }
+
+
 }

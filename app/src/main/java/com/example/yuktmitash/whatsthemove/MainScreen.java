@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -125,6 +126,17 @@ public class MainScreen extends AppCompatActivity {
                 Intent myParties = new Intent(getApplicationContext(), myPartyView.class);
                 myParties.putExtra("userId", firebaseUser.getUid());
                 myParties.putExtra("username", username);
+                reference.child("parties").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Toast.makeText(getApplicationContext(), "Oops.. You do not have a party right now", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 startActivity(myParties);
             }
         });
@@ -158,6 +170,7 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent promoting = new Intent(getApplicationContext(), AlternateList.class);
+                promoting.putExtra("Promotable", true);
                 startActivity(promoting);
             }
         });

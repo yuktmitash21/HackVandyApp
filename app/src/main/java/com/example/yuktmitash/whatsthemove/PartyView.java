@@ -17,8 +17,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +36,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
+import java.net.URI;
 import java.util.HashMap;
 
 public class PartyView extends AppCompatActivity {
@@ -37,12 +48,15 @@ public class PartyView extends AppCompatActivity {
 
     ImageView imageView;
     TextView distance;
+    private PlayerView player;
+    private SimpleExoPlayer simpleExoPlayer;
 
     StorageReference storage;
 
     int oldRating;
 
     private Button promote1;
+    private VideoView videoView;
     Button getDirections;
     Button cancel;
     private Button chatRoom1;
@@ -61,12 +75,18 @@ public class PartyView extends AppCompatActivity {
     private float trueDistance;
     private boolean alreadyPromoted = false;
 
+    private static final double MINIMUM_DISTANCE = 0.5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_view);
 
         distance = findViewById(R.id.Distance);
+        player = findViewById(R.id.playerVideoView);
+        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
+        player.setPlayer(simpleExoPlayer);
+        player.setVisibility(View.INVISIBLE);
 
         promote1 = findViewById(R.id.Promote);
         cancel = findViewById(R.id.Cancel);
@@ -75,6 +95,8 @@ public class PartyView extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance().getReference();
         chatRoom1 = findViewById(R.id.chattingRoom);
+       // videoView = findViewById(R.id.videoView);
+       // videoView.setVisibility(View.INVISIBLE);
 
 
 
@@ -93,14 +115,15 @@ public class PartyView extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 party = dataSnapshot.getValue(Party.class);
+                if (party == null) {
+                    Toast.makeText(PartyView.this, "Sorry... Party just ended", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainScreen.class));
+                }
                 float[] arr = new float[10];
                 Location.distanceBetween(userLatt, userLong, party.getLattitude(), party.getLongitude(), arr );
                 float distanceBetween = arr[0];
                 trueDistance = distanceBetween * (float) 0.000621371;
-                //THIS IS HARD CODING FOR HACKATHON PURPOSES!!!!!!!!!!!!!!!!!
-                if (trueDistance >= 1000) {
-                    trueDistance = 1;
-                }
+
                 String ages = "Average Age: " + party.getAverageAge();
                 String numProtions = "Promotions: " + party.getPromotions();
                 boolean isMove = party.getPromotions() >= NECESSARY_PROMOTIONS;
@@ -176,7 +199,7 @@ public class PartyView extends AppCompatActivity {
                             Toast.makeText(PartyView.this, "Oops! You can only promote a party once :(", Toast.LENGTH_SHORT).show();
                         } else if (party.getFireid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                             Toast.makeText(PartyView.this, "You cannot promote your own party :(", Toast.LENGTH_SHORT).show();
-                        } else if ((int)trueDistance >= 10) {
+                        } else if ((double)trueDistance >= MINIMUM_DISTANCE) {
                             Toast.makeText(PartyView.this, "You are too far from this party to promote it!",
                                     Toast.LENGTH_SHORT).show();
                         } else {
@@ -236,6 +259,43 @@ public class PartyView extends AppCompatActivity {
                 imageView.setMinimumWidth(dm.widthPixels);
                 imageView.setImageBitmap(bm);
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(PartyView.this, "Sorry... Party just ended", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainScreen.class));
+
+            }
+        });
+
+        /*storage.child("Video").child(id).getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+            @Override
+            public void onSuccess(StorageMetadata storageMetadata) {
+
+            }
+        })*/
+
+
+        final DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "WhatsTheMove??"));
+        storage.child("Video").child(id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                imageView.setVisibility(View.INVISIBLE);
+                player.setVisibility(View.VISIBLE);
+
+                ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
+                simpleExoPlayer.prepare(extractorMediaSource);
+                simpleExoPlayer.setPlayWhenReady(true);
+
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
         });
 
         getDirections.setOnClickListener(new View.OnClickListener() {
@@ -279,7 +339,7 @@ public class PartyView extends AppCompatActivity {
         chatRoom1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((int)trueDistance <= 10) {
+                if ((double)trueDistance <= MINIMUM_DISTANCE) {
                     Intent chat = new Intent(getApplicationContext(), chatRoom.class);
                     chat.putExtra("partyid", id);
                     Log.d("TAG", party.getName());
@@ -293,5 +353,14 @@ public class PartyView extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        player.setPlayer(null);
+        simpleExoPlayer.release();
+        simpleExoPlayer = null;
     }
 }
