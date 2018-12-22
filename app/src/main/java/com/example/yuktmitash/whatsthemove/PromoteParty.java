@@ -244,6 +244,11 @@ public class PromoteParty extends AppCompatActivity {
                     myParty.setAverageAge( newAge);
                     myParty.setRating(newRating);
                     myParty.setLitness(newLitnessFactor);
+                    if (myUser.getGender().equals("male")) {
+                        myParty.setMaleCount(myParty.getMaleCount() + 1);
+                    } else if (myUser.getGender().equals("female")) {
+                        myParty.setFemaleCount(myParty.getFemaleCount() + 1);
+                    }
                     
                     Log.d("NewAge", "" + newAge);
 

@@ -123,13 +123,17 @@ public class MainScreen extends AppCompatActivity {
         myParties.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myParties = new Intent(getApplicationContext(), myPartyView.class);
+                final Intent myParties = new Intent(getApplicationContext(), myPartyView.class);
                 myParties.putExtra("userId", firebaseUser.getUid());
                 myParties.putExtra("username", username);
                 reference.child("parties").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Toast.makeText(getApplicationContext(), "Oops.. You do not have a party right now", Toast.LENGTH_SHORT).show();
+                        if (dataSnapshot.getValue(Party.class) == null) {
+                            Toast.makeText(getApplicationContext(), "Oops.. You do not have a party right now", Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(myParties);
+                        }
                     }
 
                     @Override
@@ -137,7 +141,6 @@ public class MainScreen extends AppCompatActivity {
 
                     }
                 });
-                startActivity(myParties);
             }
         });
 

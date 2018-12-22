@@ -232,8 +232,8 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                             Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             DisplayMetrics displayMetrics = new DisplayMetrics();
                             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                            int height = displayMetrics.heightPixels / SCALE_HEIGHT;
-                            int width = displayMetrics.widthPixels / SCALE_WIDTH;
+                            int height = (displayMetrics.heightPixels / SCALE_HEIGHT) + (int) party.getPromotions();
+                            int width = (displayMetrics.widthPixels / SCALE_WIDTH) + (int) party.getPromotions();
                             Bitmap smallMarker = Bitmap.createScaledBitmap(bm, width, height, false);
 
 

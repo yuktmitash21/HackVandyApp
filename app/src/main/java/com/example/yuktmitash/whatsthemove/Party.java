@@ -25,11 +25,15 @@ public class Party implements Comparable {
     private String sortBy;
     private float people;
 
+    private int maleCount;
+    private int femaleCount;
+
+
 
 
 
     public Party(long promotions, double longitude, double lattitude, long rating, boolean isMove, String litness, String name,
-    String sponsor, String address) {
+    String sponsor, String address, int maleCount, int femaleCount) {
         this.promotions = promotions;
         this.longitude = longitude;
         this.lattitude = lattitude;
@@ -39,6 +43,8 @@ public class Party implements Comparable {
         this.name = name;
         this.sponsor = sponsor;
         this.address = address;
+        this.maleCount = maleCount;
+        this.femaleCount = femaleCount;
     }
 
     public Party() {}
@@ -169,5 +175,19 @@ public class Party implements Comparable {
         this.people = people;
     }
 
+    public int getFemaleCount() {
+        return femaleCount;
+    }
 
+    public int getMaleCount() {
+        return maleCount;
+    }
+
+    public void setFemaleCount(int femaleCount) {
+        this.femaleCount = femaleCount;
+    }
+
+    public void setMaleCount(int maleCount) {
+        this.maleCount = maleCount;
+    }
 }

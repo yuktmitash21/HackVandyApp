@@ -144,6 +144,14 @@ public class PartyView extends AppCompatActivity {
                   } else {
                       avgAge = "Average Age: "+party.getAverageAge();
                   }
+
+                  String ratio;
+                  if (party.getMaleCount() == 0 || party.getFemaleCount() == 0) {
+                      ratio ="Female-to-Male ratio: No ratio yet";
+                  } else {
+                      double ratio_dub = (double)party.getFemaleCount() / (double) party.getMaleCount();
+                      ratio = "Female-to-Male ratio: " + ratio_dub;
+                  }
                   String people;
                   if (party.getPeople() == 0) {
                       people = "Host has not performed a people scan. You can let them know in the chatroom!";
@@ -152,7 +160,7 @@ public class PartyView extends AppCompatActivity {
                   }
                   //String address = party.getAddress().replace("\n", "");
                 String x = party.getName() + "\n\n" + "Sponsered by: " + party.getSponsor() + "\n\n" +"Address: " + party.getAddress() +"\n\n"+numProtions
-                        + "\n\n"+ "Litness: " + party.getLitness() + "\n\n" + avgAge + "\n\n" + people + "\n\n" +"Distance: " + trueDistance+ " miles";
+                        + "\n\n"+ "Litness: " + party.getLitness() + "\n\n" + avgAge + "\n\n" + people + "\n\n" +"Distance: " + trueDistance+ " miles" + "\n\n"+ratio;
                 if (party.getPromotions() < NECESSARY_PROMOTIONS) {
                     extra = "";
                     x = x + extra;

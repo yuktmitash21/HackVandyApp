@@ -16,14 +16,17 @@ public class User {
     private double lattitude;
     private double longitude;
     private int numParties;
+    private String gender;
 
-    public User(String userName, int age, String password, String email, int monthBorn, int dayBorn) {
+    public User(String userName, int age, String password, String email, int monthBorn, int dayBorn,
+    String gender) {
         this.userName = userName;
         this.age = age;
         this.password = password;
         this.email = email;
         this.monthBorn = monthBorn;
         this.dayBorn = dayBorn;
+        this.gender = gender;
 
 
     }
@@ -102,6 +105,14 @@ public class User {
 
     public ArrayList<Party> getParties() {
         return Parties;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender() {
+        this.gender = gender;
     }
 
     @Override

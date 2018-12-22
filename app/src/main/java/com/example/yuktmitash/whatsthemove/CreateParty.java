@@ -236,7 +236,7 @@ public class CreateParty extends AppCompatActivity {
             usernumber = firebaseUser.getUid();
             Party party = new Party(0, longitude, lattitude, 0, false,
                     "Not yet rated!", name.getText().toString(), sponsor.getText().toString(),
-                    myAddress);
+                    myAddress, 0, 0);
             party.setFireid(usernumber);
 
             Firebase partay = mRootRef.child(usernumber);

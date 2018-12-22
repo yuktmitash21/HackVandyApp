@@ -13,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +42,6 @@ public class registration extends AppCompatActivity {
     private EditText username;
     private EditText email;
     private EditText password;
-    private TextView failed;
     private Button regButton;
 
 
@@ -61,6 +62,7 @@ public class registration extends AppCompatActivity {
 
 
     public BackEnd backEnd;
+    private Spinner gender;
 
 
     @Override
@@ -72,7 +74,7 @@ public class registration extends AppCompatActivity {
         username = findViewById(R.id.nameregistration);
         email = findViewById(R.id.mail);
         password = findViewById(R.id.passwordregistration);
-        failed = (TextView) findViewById(R.id.failed);
+        gender = findViewById(R.id.spinnerGender);
         regButton = (Button) findViewById(R.id.register);
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -84,6 +86,10 @@ public class registration extends AppCompatActivity {
           //  finish();
           //  startActivity(new Intent(getApplicationContext(), MainScreen.class));
        // }
+        String [] arr = new String[] {"Gender", "Male", "Female", "Other"};
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(registration.this, android.R.layout.simple_spinner_item, arr);
+        stringArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gender.setAdapter(stringArrayAdapter);
 
 
 
@@ -127,13 +133,16 @@ public class registration extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (username.getText().toString().equals("")) {
-                    failed.setText("Please enter a valid userName.");
+                    Toast.makeText(getApplicationContext(), "Please enter a valid userName.", Toast.LENGTH_SHORT).show();
                 } else if (email.getText().toString().equals("")) {
-                    failed.setText("Please enter a valid e-mail address");
+                    Toast.makeText(getApplicationContext(), "Please enter a valid e-mail address", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().equals("")) {
-                    failed.setText("Please enter a valid password.");
+                    Toast.makeText(getApplicationContext(), "Please enter a valid password.", Toast.LENGTH_SHORT).show();
                 } else if (wholeDate == null) {
-                    failed.setText("Please enter a valid date.");
+                    Toast.makeText(getApplicationContext(), "Please enter a date of birth.", Toast.LENGTH_SHORT).show();
+                } else if (gender.getSelectedItem().toString().equals("Gender")) {
+                    Toast.makeText(getApplicationContext(), "Please enter a gender.", Toast.LENGTH_SHORT).show();
+
                 } else {
                     Calendar cal = Calendar.getInstance();
                     int year = cal.get(Calendar.YEAR);
@@ -145,7 +154,8 @@ public class registration extends AppCompatActivity {
                     months++;
                     int age = months == 0 && Day <= day ? years : years - 1;
                     user = new User( username.getText().toString(), age,
-                           password.getText().toString(), email.getText().toString(), Month, Year);
+                           password.getText().toString(), email.getText().toString(), Month, Year,
+                            gender.getSelectedItem().toString());
                     registerUser();
 
 
