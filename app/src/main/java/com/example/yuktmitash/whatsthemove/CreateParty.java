@@ -88,6 +88,7 @@ public class CreateParty extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
     private Firebase mRootRef;
+    private DatabaseReference dateRef;
     private Uri downloadURI;
 
 
@@ -140,6 +141,7 @@ public class CreateParty extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         mRootRef = new Firebase("https://whatsthemove-42660.firebaseio.com/parties");
+        dateRef = FirebaseDatabase.getInstance().getReference();
       //  userfb = new Firebase("https://whatsthemove-42660.firebaseio.com/users/numParties");
         usernumber = firebaseUser.getUid();
 
@@ -244,7 +246,7 @@ public class CreateParty extends AppCompatActivity {
             Date date = new Date();
             CustomDate customDate = new CustomDate(date.getMonth(), date.getDay(), date.getYear(),
                     date.getHours(), date.getMinutes());
-            mRootRef.child("dates").child(usernumber).setValue(customDate);
+            dateRef.child("dates").child(usernumber).setValue(customDate);
 
 
             Toast.makeText(CreateParty.this, "Party Created!", Toast.LENGTH_SHORT).show();

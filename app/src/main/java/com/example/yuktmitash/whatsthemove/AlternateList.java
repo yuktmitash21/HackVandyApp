@@ -46,6 +46,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AlternateList extends AppCompatActivity {
@@ -80,6 +82,7 @@ public class AlternateList extends AppCompatActivity {
 
     private CustomAdapter MycustomAdapter;
     private ArrayList<String> IdsOfPictures;
+    private boolean exists;
 
     private static final double MINIMUM_DISTANCE = 0.5;
 
@@ -245,8 +248,38 @@ public class AlternateList extends AppCompatActivity {
                 Iterable<DataSnapshot> data = dataSnapshot.getChildren();
                 partyArrayList = new ArrayList<Party>();
                 for (DataSnapshot d : data) {
+                    exists = true;
+                    final DataSnapshot temp = d;
 
                     Party p = d.getValue(Party.class);
+                    final Party tempParty = p;
+
+                    reference.child("dates").child(p.getFireid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Date date = Calendar.getInstance().getTime();
+                            CustomDate customDate = dataSnapshot.getValue(CustomDate.class);
+                            if (customDate != null) {
+                                int hoursDayOne = (24 * (date.getDay() - 1) + date.getHours());
+                                int hoursDayTwo = (24 * (customDate.getDay() - 1) + customDate.getHours());
+                                int change = hoursDayOne - hoursDayTwo;
+                                if (change >= 12) {
+                                    temp.getRef().removeValue();
+                                    reference.child("messages").child(tempParty.getFireid()).removeValue();
+                                    reference.child("promoted").child(tempParty.getFireid()).removeValue();
+                                    storageReference.child("Video").child(tempParty.getFireid()).delete();
+                                    storageReference.child("photos").child(tempParty.getFireid()).delete();
+                                    exists = false;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
 
                     float[] arr = new float[10];
                     Location.distanceBetween(lattitude, longitude, p.getLattitude(), p.getLongitude(), arr);
@@ -256,7 +289,7 @@ public class AlternateList extends AppCompatActivity {
 
                     p.setDistance(trueDistance);
                     boolean promoteOnly = getIntent().getBooleanExtra("Promotable", false);
-                    if (!promoteOnly || p.getDistance() < MINIMUM_DISTANCE) {
+                    if (exists && (!promoteOnly || p.getDistance() < MINIMUM_DISTANCE)) {
                         partyArrayList.add(p);
                     }
                    p.setSortBy("distance");

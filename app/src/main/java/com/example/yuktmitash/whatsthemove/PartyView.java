@@ -350,7 +350,6 @@ public class PartyView extends AppCompatActivity {
                 if ((double)trueDistance <= MINIMUM_DISTANCE) {
                     Intent chat = new Intent(getApplicationContext(), chatRoom.class);
                     chat.putExtra("partyid", id);
-                    Log.d("TAG", party.getName());
                     chat.putExtra("partyName", partyName);
                     startActivity(chat);
                 } else {
@@ -368,7 +367,9 @@ public class PartyView extends AppCompatActivity {
         super.onStop();
 
         player.setPlayer(null);
-        simpleExoPlayer.release();
-        simpleExoPlayer = null;
+        if (simpleExoPlayer != null) {
+            simpleExoPlayer.release();
+            simpleExoPlayer = null;
+        }
     }
 }

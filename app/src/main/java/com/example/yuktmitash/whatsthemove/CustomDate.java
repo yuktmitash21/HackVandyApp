@@ -14,6 +14,9 @@ public class CustomDate {
         this.hours = hours;
         this.minutes = minutes;
     }
+    public CustomDate() {
+
+    }
 
     public int getDay() {
         return day;

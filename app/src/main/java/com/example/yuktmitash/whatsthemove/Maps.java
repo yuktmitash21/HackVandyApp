@@ -68,9 +68,10 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
     FirebaseDatabase database;
     DatabaseReference reference;
-    List<Party> parties = new ArrayList<>();
+    ArrayList<Party> parties = new ArrayList<>();
     String usernumber;
     private int myDistance;
+    private boolean current = true;
 
     private static final int MINIMUM_PROMOTIONS = 1;
     private static final int SCALE_WIDTH = 10;
@@ -177,6 +178,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                     reference.child("parties").child(party.getFireid()).setValue(party);
                     parties.add(party);
                     final DataSnapshot dataSnapshot1 = dat;
+                    current = true;
 
                     //delete party if necessary
                     reference.child("dates").child(party.getFireid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -186,26 +188,17 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                             Date date = Calendar.getInstance().getTime();
                             CustomDate customDate = dataSnapshot.getValue(CustomDate.class);
                             if (customDate != null) {
-                                if (date.getDay() - customDate.getDay() > 1) {
+                                int hoursDayOne = (24 * (date.getDay() - 1) + date.getHours());
+                                int hoursDayTwo = (24 * (customDate.getDay() - 1) + customDate.getHours());
+                                int change = hoursDayOne - hoursDayTwo;
+                                if (change >= 12) {
                                     dataSnapshot1.getRef().removeValue();
                                     reference.child("messages").child(party.getFireid()).removeValue();
                                     reference.child("promoted").child(party.getFireid()).removeValue();
                                     myStorage.child("Video").child(party.getFireid()).delete();
                                     myStorage.child("photos").child(party.getFireid()).delete();
-                                } else if (date.getDay() - customDate.getDay() == 1 && customDate.getHours() > 11) {
-                                    dataSnapshot1.getRef().removeValue();
-                                    reference.child("messages").child(party.getFireid()).removeValue();
-                                    reference.child("promoted").child(party.getFireid()).removeValue();
-                                    myStorage.child("Video").child(party.getFireid()).delete();
-                                    myStorage.child("photos").child(party.getFireid()).delete();
-                                } else if (date.getDay() - customDate.getDay() <= 1 && date.getHours() -
-                                        customDate.getHours() >= 12) {
-                                    dataSnapshot1.getRef().removeValue();
-                                    reference.child("messages").child(party.getFireid()).removeValue();
-                                    reference.child("promoted").child(party.getFireid()).removeValue();
-                                    myStorage.child("Video").child(party.getFireid()).delete();
-                                    myStorage.child("photos").child(party.getFireid()).delete();
-
+                                    parties.remove(parties.size() - 1);
+                                    current = false;
                                 }
                             }
                         }
@@ -232,15 +225,25 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                             Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             DisplayMetrics displayMetrics = new DisplayMetrics();
                             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                            int height = (displayMetrics.heightPixels / SCALE_HEIGHT) + (int) party.getPromotions();
-                            int width = (displayMetrics.widthPixels / SCALE_WIDTH) + (int) party.getPromotions();
+                            int widthAdd;
+                            int heightAdd;
+                            if (party.getPromotions() >= 150) {
+                                widthAdd = 150;
+                                heightAdd = 150;
+                            } else {
+                                widthAdd = (int) party.getPromotions();
+                                heightAdd = (int) party.getPromotions();
+
+                            }
+                            int height = (displayMetrics.heightPixels / SCALE_HEIGHT) + heightAdd;
+                            int width = (displayMetrics.widthPixels / SCALE_WIDTH) + widthAdd;
                             Bitmap smallMarker = Bitmap.createScaledBitmap(bm, width, height, false);
 
 
 
 
                         //add marker with title
-                            if (party.getPromotions() >= MINIMUM_PROMOTIONS) {
+                            if (party.getPromotions() >= MINIMUM_PROMOTIONS && current) {
                                 LatLng partyLocation = new LatLng(party.getLattitude(), party.getLongitude());
                                 Marker marker = mMap.addMarker(new MarkerOptions().position(partyLocation).title(party.getName() + " Distance: " + (int)trueDistance + " miles"));
                                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
