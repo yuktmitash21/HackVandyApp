@@ -210,6 +210,10 @@ public class PartyView extends AppCompatActivity {
                         } else if ((double)trueDistance >= MINIMUM_DISTANCE) {
                             Toast.makeText(PartyView.this, "You are too far from this party to promote it!",
                                     Toast.LENGTH_SHORT).show();
+                        }  else if (!party.isParty()) {
+                            Toast.makeText(PartyView.this, "Sorry ... This party was recently deleted",
+                                    Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainScreen.class));
                         } else {
                             database = FirebaseDatabase.getInstance();
                             reference = database.getReference();
@@ -347,14 +351,18 @@ public class PartyView extends AppCompatActivity {
         chatRoom1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((double)trueDistance <= MINIMUM_DISTANCE) {
+                if ((double)trueDistance <= MINIMUM_DISTANCE && party.isParty()) {
                     Intent chat = new Intent(getApplicationContext(), chatRoom.class);
                     chat.putExtra("partyid", id);
                     chat.putExtra("partyName", partyName);
                     startActivity(chat);
-                } else {
+                } else if ((double)trueDistance > MINIMUM_DISTANCE) {
                     Toast.makeText(PartyView.this, "You are too far from this party to enter the chatRoom!",
                             Toast.LENGTH_SHORT).show();
+                } else if (!party.isParty()) {
+                    Toast.makeText(PartyView.this, "Sorry ... This party was recently deleted",
+                            Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainScreen.class));
                 }
             }
         });

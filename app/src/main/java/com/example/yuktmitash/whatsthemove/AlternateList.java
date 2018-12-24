@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
 
 public class AlternateList extends AppCompatActivity {
@@ -82,7 +84,6 @@ public class AlternateList extends AppCompatActivity {
 
     private CustomAdapter MycustomAdapter;
     private ArrayList<String> IdsOfPictures;
-    private boolean exists;
 
     private static final double MINIMUM_DISTANCE = 0.5;
 
@@ -248,37 +249,10 @@ public class AlternateList extends AppCompatActivity {
                 Iterable<DataSnapshot> data = dataSnapshot.getChildren();
                 partyArrayList = new ArrayList<Party>();
                 for (DataSnapshot d : data) {
-                    exists = true;
-                    final DataSnapshot temp = d;
 
                     Party p = d.getValue(Party.class);
-                    final Party tempParty = p;
 
-                    reference.child("dates").child(p.getFireid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Date date = Calendar.getInstance().getTime();
-                            CustomDate customDate = dataSnapshot.getValue(CustomDate.class);
-                            if (customDate != null) {
-                                int hoursDayOne = (24 * (date.getDay() - 1) + date.getHours());
-                                int hoursDayTwo = (24 * (customDate.getDay() - 1) + customDate.getHours());
-                                int change = hoursDayOne - hoursDayTwo;
-                                if (change >= 12) {
-                                    temp.getRef().removeValue();
-                                    reference.child("messages").child(tempParty.getFireid()).removeValue();
-                                    reference.child("promoted").child(tempParty.getFireid()).removeValue();
-                                    storageReference.child("Video").child(tempParty.getFireid()).delete();
-                                    storageReference.child("photos").child(tempParty.getFireid()).delete();
-                                    exists = false;
-                                }
-                            }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
 
 
                     float[] arr = new float[10];
@@ -289,7 +263,7 @@ public class AlternateList extends AppCompatActivity {
 
                     p.setDistance(trueDistance);
                     boolean promoteOnly = getIntent().getBooleanExtra("Promotable", false);
-                    if (exists && (!promoteOnly || p.getDistance() < MINIMUM_DISTANCE)) {
+                    if (p.isParty() && (!promoteOnly || p.getDistance() < MINIMUM_DISTANCE)) {
                         partyArrayList.add(p);
                     }
                    p.setSortBy("distance");
@@ -362,16 +336,36 @@ public class AlternateList extends AppCompatActivity {
 
                     }
                 }
-                String fireid = mine.getFireid();
-                Intent promoteIntent = new Intent(getApplicationContext(), PartyView.class);
-                promoteIntent.putExtra("name", name);
-                promoteIntent.putExtra("id", fireid);
+
+                final String fireid = mine.getFireid();
+                reference.child("parties").child(fireid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Party p = dataSnapshot.getValue(Party.class);
+                        if (p.isParty()) {
+                            Intent promoteIntent = new Intent(getApplicationContext(), PartyView.class);
+                            promoteIntent.putExtra("name", p.getName());
+                            promoteIntent.putExtra("id", fireid);
 
 
 
-                promoteIntent.putExtra("UserLatt", lattitude);
-                promoteIntent.putExtra("UserLong", longitude);
-                startActivity(promoteIntent);
+                            promoteIntent.putExtra("UserLatt", lattitude);
+                            promoteIntent.putExtra("UserLong", longitude);
+                            startActivity(promoteIntent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Sorry... this party was recently" +
+                                    "deleted", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
         });
 

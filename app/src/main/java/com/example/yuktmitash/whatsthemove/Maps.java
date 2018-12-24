@@ -43,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 public class Maps extends FragmentActivity implements OnMapReadyCallback {
@@ -62,6 +63,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
     private Firebase mRootRef;
 
     private float counter = 0;
+    private HashSet<String> testString = new HashSet<>();
 
     private StorageReference myStorage;
 
@@ -178,27 +180,28 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                     reference.child("parties").child(party.getFireid()).setValue(party);
                     parties.add(party);
                     final DataSnapshot dataSnapshot1 = dat;
-                    current = true;
 
                     //delete party if necessary
                     reference.child("dates").child(party.getFireid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.d("BOOLEAN68", "true");
 
                             Date date = Calendar.getInstance().getTime();
                             CustomDate customDate = dataSnapshot.getValue(CustomDate.class);
                             if (customDate != null) {
-                                int hoursDayOne = (24 * (date.getDay() - 1) + date.getHours());
+                                int hoursDayOne = (24 * (date.getDate() - 1) + date.getHours());
                                 int hoursDayTwo = (24 * (customDate.getDay() - 1) + customDate.getHours());
                                 int change = hoursDayOne - hoursDayTwo;
-                                if (change >= 12) {
-                                    dataSnapshot1.getRef().removeValue();
+                                if (change >= 12 || ((customDate.getMonth() != date.getMonth()) && customDate.getHours() >= 12)) {
+                                    Log.d("BOOLEAN69", "true");
+                                    reference.child("dates").child(party.getFireid()).removeValue();
+                                    reference.child("parties").child(party.getFireid()).child("party").setValue(false);
                                     reference.child("messages").child(party.getFireid()).removeValue();
                                     reference.child("promoted").child(party.getFireid()).removeValue();
                                     myStorage.child("Video").child(party.getFireid()).delete();
-                                    myStorage.child("photos").child(party.getFireid()).delete();
-                                    parties.remove(parties.size() - 1);
-                                    current = false;
+                                    //myStorage.child("photos").child(party.getFireid()).delete();
+                                    testString.add(party.getFireid());
                                 }
                             }
                         }
@@ -218,7 +221,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                     myDistance = (int) trueDistance;
 
                     //get picture
-                    Bitmap bm;
                     myStorage.child("photos").child(party.getFireid()).getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                         @Override
                         public void onSuccess(byte[] bytes) {
@@ -241,9 +243,10 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
 
 
-
+                        Log.d("BOOLEAN62", current + " " + party.getName());
                         //add marker with title
-                            if (party.getPromotions() >= MINIMUM_PROMOTIONS && current) {
+                            if (party.getPromotions() >= MINIMUM_PROMOTIONS && !testString.contains(party.getFireid()) &&
+                                    party.isParty()) {
                                 LatLng partyLocation = new LatLng(party.getLattitude(), party.getLongitude());
                                 Marker marker = mMap.addMarker(new MarkerOptions().position(partyLocation).title(party.getName() + " Distance: " + (int)trueDistance + " miles"));
                                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));

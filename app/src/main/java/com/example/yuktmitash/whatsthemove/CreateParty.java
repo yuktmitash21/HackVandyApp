@@ -127,6 +127,7 @@ public class CreateParty extends AppCompatActivity {
         locButtton = findViewById(R.id.LocationButton);
         cancel = findViewById(R.id.CancelMakeParty);
         addPic = findViewById(R.id.addPic);
+        addPic.setText("Add Image");
         imageView = findViewById(R.id.imageView2);
 
         progressDialog = new ProgressDialog(CreateParty.this);
@@ -236,7 +237,7 @@ public class CreateParty extends AppCompatActivity {
 
             //adding party to db by user id
             usernumber = firebaseUser.getUid();
-            Party party = new Party(0, longitude, lattitude, 0, false,
+            Party party = new Party(0, longitude, lattitude, 0, true,
                     "Not yet rated!", name.getText().toString(), sponsor.getText().toString(),
                     myAddress, 0, 0);
             party.setFireid(usernumber);
@@ -244,7 +245,7 @@ public class CreateParty extends AppCompatActivity {
             Firebase partay = mRootRef.child(usernumber);
             partay.setValue(party);
             Date date = new Date();
-            CustomDate customDate = new CustomDate(date.getMonth(), date.getDay(), date.getYear(),
+            CustomDate customDate = new CustomDate(date.getMonth(), date.getDate(), date.getYear(),
                     date.getHours(), date.getMinutes());
             dateRef.child("dates").child(usernumber).setValue(customDate);
 
@@ -353,8 +354,9 @@ public class CreateParty extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
                     Toast.makeText(CreateParty.this, "Image Uploaded!", Toast.LENGTH_LONG).show();
-                    addPic.setVisibility(View.INVISIBLE);
-                    imageView.setImageBitmap(bitmap);
+                    addPic.setText("Change Image");
+                   // addPic.setVisibility(View.INVISIBLE);
+                    //imageView.setImageBitmap(bitmap);
                     checkForImage = true;
 
 

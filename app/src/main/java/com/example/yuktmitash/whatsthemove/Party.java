@@ -15,7 +15,7 @@ public class Party implements Comparable {
     private String sponsor;
     private String address;
 
-    private boolean isMove;
+    private boolean isParty;
     private String litness;
 
     private String fireid;
@@ -38,7 +38,7 @@ public class Party implements Comparable {
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.rating = rating;
-        this.isMove = isMove;
+        this.isParty = isMove;
         this.litness = litness;
         this.name = name;
         this.sponsor = sponsor;
@@ -57,8 +57,8 @@ public class Party implements Comparable {
         this.lattitude = lattitude;
     }
 
-    public void setMove(boolean move) {
-        isMove = move;
+    public void setParty(boolean move) {
+        isParty = move;
     }
 
     public void setLitness(String litness) {
@@ -77,8 +77,8 @@ public class Party implements Comparable {
         return litness;
     }
 
-    public boolean isMove() {
-        return isMove;
+    public boolean isParty() {
+        return isParty;
     }
 
     public double getLattitude() {
