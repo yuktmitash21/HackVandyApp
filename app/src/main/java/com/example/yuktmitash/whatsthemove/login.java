@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,19 +80,25 @@ public class login extends AppCompatActivity {
     public void signInUser() {
         Email = email.getText().toString().trim();
         Password = password.getText().toString().trim();
-     //   if (TextUtils.isEmpty(Email)) {
-       //     failed.setText("Please enter a valid e-mail");
-       // } else if (TextUtils.isEmpty(Password)) {
+        //   if (TextUtils.isEmpty(Email)) {
+        //     failed.setText("Please enter a valid e-mail");
+        // } else if (TextUtils.isEmpty(Password)) {
         //    failed.setText("Please enter a valid password");
-       // } else {
-            progressDialog.setMessage("Signing in....");
+        // } else {
+        progressDialog.setMessage("Signing in....");
+
+        if (Email.equals("")) {
+            Toast.makeText(login.this, "Invalid e-mail", Toast.LENGTH_SHORT).show();
+        } else if (Password.equals("")) {
+            Toast.makeText(login.this, "No Password", Toast.LENGTH_SHORT).show();
+        } else {
             progressDialog.show();
             firebaseAuth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         progressDialog.dismiss();
-                       // Toast.makeText(login.this, "Success.", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(login.this, "Success.", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(login.this, "Logged In!", Toast.LENGTH_SHORT).show();
                         //finish();
                         Intent mainScreen = new Intent(getApplicationContext(), MainScreen.class);
@@ -99,13 +106,20 @@ public class login extends AppCompatActivity {
 
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(login.this, "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(login.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
 
 
                 }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(login.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
             });
         }
+    }
     //on data change listener rather than single event
 
 

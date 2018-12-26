@@ -188,6 +188,8 @@ public class myPartyView extends AppCompatActivity {
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);

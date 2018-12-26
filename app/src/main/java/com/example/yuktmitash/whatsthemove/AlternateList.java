@@ -354,7 +354,7 @@ public class AlternateList extends AppCompatActivity {
                             startActivity(promoteIntent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Sorry... this party was recently" +
-                                    "deleted", Toast.LENGTH_SHORT).show();
+                                    " deleted", Toast.LENGTH_SHORT).show();
 
                         }
                     }

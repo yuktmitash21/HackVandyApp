@@ -229,7 +229,7 @@ public class CreateParty extends AppCompatActivity {
             Toast.makeText(CreateParty.this, "Please enter a name", Toast.LENGTH_SHORT).show();
         } else if (sponsor.getText().toString().equals("")) {
             Toast.makeText(CreateParty.this, "Please enter a sponsor", Toast.LENGTH_SHORT).show();
-        } else if (myAddress.equals("")) {
+        } else if (myAddress == null) {
             Toast.makeText(CreateParty.this, "Please set your location" , Toast.LENGTH_SHORT).show();
         } else if (!checkForImage) {
             Toast.makeText(CreateParty.this, "Please upload an image", Toast.LENGTH_SHORT).show();
@@ -375,5 +375,7 @@ public class CreateParty extends AppCompatActivity {
 
         }
     }
+
+
 }
 

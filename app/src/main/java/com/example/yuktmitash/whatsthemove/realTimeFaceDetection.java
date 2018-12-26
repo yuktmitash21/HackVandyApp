@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
@@ -64,7 +65,7 @@ public class realTimeFaceDetection extends AppCompatActivity {
         graphicOverlay = findViewById(R.id.helper_detect);
         detecter = findViewById(R.id.detection_button);
         waitingDialog = new ProgressDialog(realTimeFaceDetection.this);
-        waitingDialog.setMessage("Loading camera...");
+        waitingDialog.setMessage("Searching...");
         //waitingDialog.show();
 
         detecter.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +145,10 @@ public class realTimeFaceDetection extends AppCompatActivity {
         }
         waitingDialog.dismiss();
         Toast.makeText(realTimeFaceDetection.this, String.format("Detected %d faces in room", count), Toast.LENGTH_SHORT).show();
+        String id = getIntent().getStringExtra("id");
+        FirebaseDatabase.getInstance().getReference().child("parties").child(id).child("people").setValue(count);
+        Toast.makeText(realTimeFaceDetection.this, "Party has been updated!", Toast.LENGTH_SHORT).show();
+
 
     }
 

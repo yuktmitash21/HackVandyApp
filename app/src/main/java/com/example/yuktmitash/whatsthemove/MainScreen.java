@@ -129,7 +129,9 @@ public class MainScreen extends AppCompatActivity {
                 reference.child("parties").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (!dataSnapshot.getValue(Party.class).isParty()) {
+                        if (dataSnapshot.getValue(Party.class) == null) {
+                            Toast.makeText(getApplicationContext(), "Oops.. You do not have a party right now", Toast.LENGTH_SHORT).show();
+                        } else if (!dataSnapshot.getValue(Party.class).isParty()) {
                             Toast.makeText(getApplicationContext(), "Oops.. You do not have a party right now", Toast.LENGTH_SHORT).show();
                         } else {
                             startActivity(myParties);

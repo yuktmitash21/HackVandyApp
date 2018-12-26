@@ -74,7 +74,9 @@
         <activity android:name=".NumberOfPeople" />
         <activity android:name=".CheckCop" />
         <activity android:name=".PeopleCounter" />
-        <activity android:name=".realTimeFaceDetection"></activity>
+        <activity android:name=".realTimeFaceDetection" />
+        <activity android:name=".Comments" />
+        <activity android:name=".TextBox"></activity>
     </application>
 
 </manifest>

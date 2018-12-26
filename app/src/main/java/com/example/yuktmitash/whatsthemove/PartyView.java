@@ -150,17 +150,17 @@ public class PartyView extends AppCompatActivity {
                       ratio ="Female-to-Male ratio: No ratio yet";
                   } else {
                       double ratio_dub = (double)party.getFemaleCount() / (double) party.getMaleCount();
-                      ratio = "Female-to-Male ratio: " + ratio_dub;
+                      ratio = "Female-to-Male ratio: " + party.getFemaleCount() + ":" + party.getMaleCount();
                   }
                   String people;
                   if (party.getPeople() == 0) {
-                      people = "Host has not performed a people scan. You can let them know in the chatroom!";
+                      people = "\n\n";
                   } else {
-                      people = "Number of people: " + (int) (party.getPeople());
+                      people = "\n\n" + "Number of people: " + (int) (party.getPeople()) + "\n\n";
                   }
                   //String address = party.getAddress().replace("\n", "");
-                String x = party.getName() + "\n\n" + "Sponsered by: " + party.getSponsor() + "\n\n" +"Address: " + party.getAddress() +"\n\n"+numProtions
-                        + "\n\n"+ "Litness: " + party.getLitness() + "\n\n" + avgAge + "\n\n" + people + "\n\n" +"Distance: " + trueDistance+ " miles" + "\n\n"+ratio;
+                String x = party.getName() + "\n\n" + "Sponsor: " + party.getSponsor() + "\n\n" +"Address: " + party.getAddress() +"\n\n"+numProtions
+                        + "\n\n"+ "Litness: " + party.getLitness() + "\n\n" + avgAge + people +"Distance: " + trueDistance+ " miles" + "\n\n"+ratio;
                 if (party.getPromotions() < NECESSARY_PROMOTIONS) {
                     extra = "";
                     x = x + extra;
@@ -256,7 +256,18 @@ public class PartyView extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainScreen.class));
+                if (party.isParty()) {
+                    Intent comment = new Intent(getApplicationContext(), Comments.class);
+                    comment.putExtra("name", party.getName());
+                    comment.putExtra("partyId", id);
+                    startActivity(comment);
+                } else if (party.getFireid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    Toast.makeText(PartyView.this, "Sorry ... Your party has been deleted",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(PartyView.this, "Sorry ... This party has been deleted",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -355,10 +366,14 @@ public class PartyView extends AppCompatActivity {
                     Intent chat = new Intent(getApplicationContext(), chatRoom.class);
                     chat.putExtra("partyid", id);
                     chat.putExtra("partyName", partyName);
+                    chat.putExtra("inRange", true);
                     startActivity(chat);
                 } else if ((double)trueDistance > MINIMUM_DISTANCE) {
-                    Toast.makeText(PartyView.this, "You are too far from this party to enter the chatRoom!",
-                            Toast.LENGTH_SHORT).show();
+                    Intent chat = new Intent(getApplicationContext(), chatRoom.class);
+                    chat.putExtra("partyid", id);
+                    chat.putExtra("partyName", partyName);
+                    chat.putExtra("inRange", false);
+                    startActivity(chat);
                 } else if (!party.isParty()) {
                     Toast.makeText(PartyView.this, "Sorry ... This party was recently deleted",
                             Toast.LENGTH_SHORT).show();
@@ -370,7 +385,7 @@ public class PartyView extends AppCompatActivity {
 
     }
 
-    @Override
+    /*@Override
     protected void onStop() {
         super.onStop();
 
@@ -379,5 +394,5 @@ public class PartyView extends AppCompatActivity {
             simpleExoPlayer.release();
             simpleExoPlayer = null;
         }
-    }
+    }*/
 }

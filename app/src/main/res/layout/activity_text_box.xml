@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TextBox">
+
+    <EditText
+        android:id="@+id/commentText"
+        android:layout_width="378dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="249dp"
+        android:layout_marginTop="249dp"
+        android:ems="10"
+        android:gravity="fill_vertical"
+        android:inputType="textLongMessage"
+        android:maxLength="150"
+        app:layout_constraintBottom_toTopOf="@+id/charCount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/charCount"
+        android:layout_width="213dp"
+        android:layout_height="59dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginRight="163dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commentText" />
+
+    <Button
+        android:id="@+id/updateComments"
+        android:layout_width="124dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="119dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginStart="45dp"
+        android:text="Update"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/charCount"
+        app:layout_constraintTop_toBottomOf="@+id/commentText"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>

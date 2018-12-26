@@ -1,10 +1,12 @@
 package com.example.yuktmitash.whatsthemove;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,7 @@ public class AlternateChat extends AppCompatActivity {
 
 
     private String partyName;
+    private ViewHolder viewHolder;
 
     private long numberOfMessages;
 
@@ -62,6 +65,13 @@ public class AlternateChat extends AppCompatActivity {
         listView = findViewById(R.id.dynamic);
         customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+
+
+
+      viewHolder = new ViewHolder();
+        viewHolder.imageView = (ImageView) listView.findViewById(R.id.imageView5);
+        viewHolder.textView = (TextView) listView.findViewById(R.id.textView3);
+       listView.setTag(viewHolder);
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -234,6 +244,12 @@ public class AlternateChat extends AppCompatActivity {
                     return view;
 
                 }
+            }
+
+            static class ViewHolder {
+        private ImageView imageView;
+        private TextView textView;
+
             }
 
 

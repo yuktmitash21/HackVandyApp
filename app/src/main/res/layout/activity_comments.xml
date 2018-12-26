@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Comments">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="381dp"
+        android:layout_height="191dp"
+        android:layout_marginBottom="196dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="378dp"
+        android:layout_height="143dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.562"
+        app:srcCompat="@android:drawable/screen_background_light_transparent" />
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/commentVideo"
+        android:layout_width="385dp"
+        android:layout_height="145dp"
+        android:layout_marginBottom="33dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/commentScanner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+    </com.google.android.exoplayer2.ui.PlayerView>
+
+    <Button
+        android:id="@+id/addComments"
+        android:layout_width="109dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:text="Add Comments"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/homeFromView1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/homeFromView1"
+        android:layout_width="109dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/videoAdder"
+        android:layout_width="109dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="8dp"
+        android:text="Add Video"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/homeFromView1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/commentScanner"
+        android:layout_width="109dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="-9dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:text="Scan Faces"
+        app:layout_constraintBottom_toTopOf="@+id/addComments"
+        app:layout_constraintEnd_toStartOf="@+id/picChanger"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/deleter"
+        android:layout_width="109dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="-8dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="8dp"
+        android:text="Delete Party"
+        app:layout_constraintBottom_toTopOf="@+id/videoAdder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/picChanger"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/picChanger"
+        android:layout_width="109dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="-9dp"
+        android:layout_marginTop="8dp"
+        android:text="Change Picture"
+        app:layout_constraintBottom_toTopOf="@+id/homeFromView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+</android.support.constraint.ConstraintLayout>

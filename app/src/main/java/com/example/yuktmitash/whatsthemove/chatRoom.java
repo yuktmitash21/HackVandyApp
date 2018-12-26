@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -124,11 +126,18 @@ public class chatRoom extends AppCompatActivity {
                                 String username2 = (String) arr[1];
                                 String message1 = (String) arr2[0];
                                 String message2 = (String) arr2[1];
-                                line = username1 + ": " + message1 + "\n" + username2 + ": " + message2;
+                                line = username1 + ": " + message1 + "\n\n" + username2 + ": " + message2;
                             }
-                            x.append(line +"\n");
+                            x.append(line +"\n\n");
                         }
                         textView.setText(x.toString());
+                        final ScrollView scroll = findViewById(R.id.scrollView1);
+                        scroll.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                scroll.fullScroll(ScrollView.FOCUS_DOWN);
+                            }
+                        },1);
                     }
 
                     @Override
@@ -143,28 +152,37 @@ public class chatRoom extends AppCompatActivity {
 
     public void sendMessage(View view) {
         //final int instances;
-        reference.child("messages").child(user.getUserName()).child(partyId).child("instances").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long newInstances;
-                if (dataSnapshot.getValue() != null) {
-                    long instances = (long) dataSnapshot.getValue();
-                    newInstances = instances + 1;
-                } else {
-                    newInstances = 1;
+        boolean inRange = getIntent().getBooleanExtra("inRange", true);
+        if (!inRange) {
+            Toast.makeText(getApplicationContext(), "Oops... You must be at the party to chat", Toast.LENGTH_SHORT).show();
+        } else {
+            reference.child("messages").child(user.getUserName()).child(partyId).child("instances").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    long newInstances;
+                    if (dataSnapshot.getValue() != null) {
+                        long instances = (long) dataSnapshot.getValue();
+                        newInstances = instances + 1;
+                    } else {
+                        newInstances = 1;
+                    }
+                    if (!editText.getText().toString().equals("")) {
+                      //  ScrollView scroll = findViewById(R.id.scrollView1);
+                       // scroll.fullScroll(View.FOCUS_DOWN);
+                        String id = user.getUserName();
+                        numberOfMessages = numberOfMessages + 1;
+                        reference.child("messages").child("instances").child(partyId).setValue(numberOfMessages);
+                        reference.child("messages").child(partyId).child(numberOfMessages + "").child(id).setValue(editText.getText().toString());
+                        editText.setText("");
+                    }
+
                 }
-                String id = user.getUserName();
-                numberOfMessages = numberOfMessages + 1;
-                reference.child("messages").child("instances").child(partyId).setValue(numberOfMessages);
-                reference.child("messages").child(partyId).child(numberOfMessages + "").child(id).setValue(editText.getText().toString());
-                editText.setText("");
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
+        }
     }
 }
