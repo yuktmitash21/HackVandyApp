@@ -199,6 +199,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                                     reference.child("parties").child(party.getFireid()).child("party").setValue(false);
                                     reference.child("messages").child(party.getFireid()).removeValue();
                                     reference.child("promoted").child(party.getFireid()).removeValue();
+                                    reference.child("comments").child(party.getFireid()).removeValue();
                                     myStorage.child("Video").child(party.getFireid()).delete();
                                     //myStorage.child("photos").child(party.getFireid()).delete();
                                     testString.add(party.getFireid());
@@ -297,6 +298,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         mapsHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(getApplicationContext(), MainScreen.class));
             }
         });

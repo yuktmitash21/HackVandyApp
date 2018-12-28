@@ -266,7 +266,7 @@ public class Comments extends AppCompatActivity {
 
     }
 
-  /*  @Override
+    @Override
     protected void onStop() {
         super.onStop();
 
@@ -275,7 +275,7 @@ public class Comments extends AppCompatActivity {
             simpleExoPlayer.release();
             simpleExoPlayer = null;
         }
-    }*/
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {

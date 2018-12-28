@@ -106,6 +106,10 @@ public class PartyView extends AppCompatActivity {
         final double userLong = getIntent().getDoubleExtra("UserLong", 0.0);
         id = getIntent().getStringExtra("id");
 
+        if (id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            cancel.setText("Edit Party");
+        }
+
 
 
 
@@ -117,6 +121,12 @@ public class PartyView extends AppCompatActivity {
                 party = dataSnapshot.getValue(Party.class);
                 if (party == null) {
                     Toast.makeText(PartyView.this, "Sorry... Party just ended", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainScreen.class));
+                }
+                if (!party.isParty()) {
+                    Toast.makeText(PartyView.this, "Sorry... Party just ended", Toast.LENGTH_SHORT).show();
+                    finish();
                     startActivity(new Intent(getApplicationContext(), MainScreen.class));
                 }
                 float[] arr = new float[10];
@@ -213,6 +223,7 @@ public class PartyView extends AppCompatActivity {
                         }  else if (!party.isParty()) {
                             Toast.makeText(PartyView.this, "Sorry ... This party was recently deleted",
                                     Toast.LENGTH_SHORT).show();
+                            finish();
                             startActivity(new Intent(getApplicationContext(), MainScreen.class));
                         } else {
                             database = FirebaseDatabase.getInstance();
@@ -228,6 +239,7 @@ public class PartyView extends AppCompatActivity {
                                     promote33.putExtra("partyName", name);
                                     promote33.putExtra("latt", userLatt);
                                     promote33.putExtra("long", userLong);
+                                    finish();
                                     startActivity(promote33);
                                     // Toast.makeText(PartyView.this, "The party has been promoted. Thanks for your input!",
                                     //       Toast.LENGTH_SHORT).show();
@@ -286,6 +298,7 @@ public class PartyView extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(PartyView.this, "Sorry... Party just ended", Toast.LENGTH_SHORT).show();
+                finish();
                 startActivity(new Intent(getApplicationContext(), MainScreen.class));
 
             }
@@ -385,7 +398,7 @@ public class PartyView extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @Override
     protected void onStop() {
         super.onStop();
 
@@ -394,5 +407,5 @@ public class PartyView extends AppCompatActivity {
             simpleExoPlayer.release();
             simpleExoPlayer = null;
         }
-    }*/
+    }
 }

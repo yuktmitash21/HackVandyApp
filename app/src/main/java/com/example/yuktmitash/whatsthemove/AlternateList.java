@@ -351,6 +351,7 @@ public class AlternateList extends AppCompatActivity {
 
                             promoteIntent.putExtra("UserLatt", lattitude);
                             promoteIntent.putExtra("UserLong", longitude);
+                            finish();
                             startActivity(promoteIntent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Sorry... this party was recently" +

@@ -1,10 +1,18 @@
 package com.example.yuktmitash.whatsthemove;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +46,11 @@ public class MainScreen extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     FirebaseDatabase database;
     DatabaseReference reference;
+
+    private double lattitude;
+    private double longitude;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +105,51 @@ public class MainScreen extends AppCompatActivity {
         partyStarter.getBackground().mutate().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         Promote.getBackground().mutate().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
 
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                lattitude = location.getLatitude();
+                longitude = location.getLongitude();
+
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+
+            }
+        };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(MainScreen.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainScreen.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET},
+                        10);
+            } else {
+                locationManager.requestLocationUpdates(android.location.LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                Location location = locationManager.getLastKnownLocation(android.location.LocationManager.NETWORK_PROVIDER);
+                locationManager.removeUpdates(locationListener);
+                if (location == null) {
+                    Log.e("Maps", "Houston, we have a problem.");
+                } else {
+                    lattitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            }
+        }
+
+
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,17 +181,20 @@ public class MainScreen extends AppCompatActivity {
         myParties.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent myParties = new Intent(getApplicationContext(), myPartyView.class);
-                myParties.putExtra("userId", firebaseUser.getUid());
-                myParties.putExtra("username", username);
                 reference.child("parties").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue(Party.class) == null) {
+                        Party p = dataSnapshot.getValue(Party.class);
+                        if (p == null) {
                             Toast.makeText(getApplicationContext(), "Oops.. You do not have a party right now", Toast.LENGTH_SHORT).show();
-                        } else if (!dataSnapshot.getValue(Party.class).isParty()) {
+                        } else if (!p.isParty()) {
                             Toast.makeText(getApplicationContext(), "Oops.. You do not have a party right now", Toast.LENGTH_SHORT).show();
                         } else {
+                            Intent myParties = new Intent(getApplicationContext(), PartyView.class);
+                            myParties.putExtra("name", p.getName());
+                            myParties.putExtra("UserLatt", lattitude);
+                            myParties.putExtra("UserLong", longitude);
+                            myParties.putExtra("id", p.getFireid());
                             startActivity(myParties);
                         }
                     }
